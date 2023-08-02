@@ -1,11 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Home task 1</title>
-        <link rel="stylesheet" href="./styles.css" />
-        <script defer type="module" src="./script.js"></script>
-    </head>
-    <body></body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home task 1</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="./styles.css" />
+    <script defer type="module" src="./script.js"></script>
+  </head>
+  <body class="body container">
+    <main>
+      <section class="noutes">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Create</th>
+              <th>Category</th>
+              <th>Content</th>
+              <th>Dates</th>
+              <th>
+                <div class="control-btns">
+                  <button class="control-btns__btn">
+                    <img
+                      class="control-btns__img"
+                      src="./icons/archive.svg"
+                      alt="archive"
+                    />
+                  </button>
+                  <button class="control-btns__btn">
+                    <img
+                      class="control-btns__img"
+                      src="./icons/delete.svg"
+                      alt="delete"
+                    />
+                  </button>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="notes-container"></tbody>
+        </table>
+        <button
+          id="create-note"
+          type="button"
+          class="btn btn-dark"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+        >
+          Create Note
+        </button>
+      </section>
+      <section class="categories">
+        <table class="table">
+          <thead>
+            <tr>
+              <th colspan="2">Note Category</th>
+              <th colspan="2">Active</th>
+              <th>Archived</th>
+              <th class="d-flex flex-row-reverse">Check archived</th>
+            </tr>
+          </thead>
+          <tbody id="summary-container"></tbody>
+        </table>
+      </section>
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Note</h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form id="new-note-form" novalidate>
+                <div>
+                  <label for="name" class="form-label">Note name</label>
+                  <input
+                    type="text"
+                    class="form-control needs-validation"
+                    id="name"
+                    data-name-input
+                    data-input
+                    required
+                  />
+                  <div class="valid-feedback">Looks good!</div>
+                  <div>
+                    <label for="content" class="form-label">Content</label>
+                    <input
+                      type="text"
+                      class="form-control needs-validation"
+                      id="validationCustom0content"
+                      data-content-input
+                      data-input
+                      required
+                    />
+                    <div class="valid-feedback">Looks good!</div>
+                  </div>
+                  <div>
+                    <label for="category" class="form-label">State</label>
+                    <select
+                      class="form-select needs-validation my-1"
+                      id="category"
+                      data-category-input
+                      data-input
+                      required
+                    >
+                      <option disabled value="" selected>Choose category</option>
+                      <option value="Task">Task</option>
+                      <option value="Random Thought">Random Thought</option>
+                      <option value="Idea">Idea</option>
+                    </select>
+                    <div class="invalid-feedback">Please select a valid state.</div>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="archive"
+                      data-input
+                      data-archive-input
+                    />
+                    <label class="form-check-label" for="archive"> Archive note </label>
+                  </div>
+                </div>
+                <div class="col-md-4 my-3">
+                  <button id="add-note-btn" type="submit" class="btn btn-primary">
+                    Create
+                  </button>
+                  <button id="save-note-btn" type="button" class="btn btn-info d-none">
+                    Save
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <template id="note-row-template">
+      <tr class="note">
+        <td>
+          <img src="" alt="label" data-icon />
+          <span data-name></span>
+        </td>
+        <td data-created></td>
+        <td data-category></td>
+        <td data-content></td>
+        <td data-dates></td>
+      </tr>
+    </template>
+    <template id="summary-row-template">
+      <tr class="mt-2">
+        <td class="category-container">
+          <img src="" alt="label" data-icon />
+          <span data-category></span>
+        </td>
+        <td data-active></td>
+        <td data-archived></td>
+        <td class="d-flex flex-row-reverse">
+          <button class="btn btn-info" data-bs-toggle="collapse" data-bs-target>
+            Check
+          </button>
+        </td>
+      </tr>
+    </template>
+  </body>
 </html>
